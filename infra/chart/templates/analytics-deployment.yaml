@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: analytics-deployment
+  labels:
+    app: analytics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: analytics
+  template:
+    metadata:
+      labels:
+        app: analytics
+    spec:
+      containers:
+        - name: analytics
+          image: {{.Values.image.analytics}}
+          ports:
+            - containerPort: 3000
+          env:
+            - name: MONGODB_URI
+              value: {{.Values.env.mongodbUri}}

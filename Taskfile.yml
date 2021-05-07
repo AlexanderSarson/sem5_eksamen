@@ -1,0 +1,34 @@
+version: "3"
+
+tasks:
+  start:
+    cmds:
+      - docker-compose up -d
+      - docker-compose ps
+  stop:
+    cmds:
+      - docker-compose down
+  reset:
+    cmds:
+      - docker-compose down
+      - sudo rm -rf $PWD/localdev/mongo_data/*
+      - sudo rm -rf $PWD/analytics/node_modules
+      - sudo rm -rf $PWD/analytics/dist
+      - sudo rm -rf $PWD/consumer/node_modules
+      - sudo rm -rf $PWD/provider/node_modules
+  reset-db:
+    cmds:
+      - docker-compose down
+      - sudo rm -rf $PWD/localdev/mongo_data/*
+  log-analytics:
+    cmds:
+      - docker-compose logs analytics
+  log-consumer:
+    cmds:
+      - docker-compose logs consumer
+  log-provider:
+    cmds:
+      - docker-compose logs provider
+  log-mongo:
+    cmds:
+      - docker-compose logs mongo

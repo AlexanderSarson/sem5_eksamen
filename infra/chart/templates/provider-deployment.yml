@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: provider-deployment
+  labels:
+    app: provider
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: provider
+  template:
+    metadata:
+      labels:
+        app: provider
+    spec:
+      containers:
+        - name: provider
+          image: {{.Values.image.provider}}
+          ports:
+            - containerPort: 3000
+          env:
+            - name: ANALYTICS_URL
+              value: {{.Values.env.analyticsUrl}}

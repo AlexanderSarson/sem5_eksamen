@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-deployment
+  labels:
+    app: consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consumer
+  template:
+    metadata:
+      labels:
+        app: consumer
+    spec:
+      containers:
+        - name: consumer
+          image: {{.Values.image.consumer}}
+          ports:
+            - containerPort: 3000
+          env:
+            - name: ANALYTICS_URL
+              value: {{.Values.env.analyticsUrl}}

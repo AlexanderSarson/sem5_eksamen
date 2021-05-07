@@ -1,0 +1,33 @@
+version: "3.7"
+services:
+  mongo:
+    image: mongo:3.6.23
+    volumes:
+      - $PWD/localdev/mongo_data:/data/db
+  analytics:
+    image: node:14-buster
+    working_dir: /app
+    volumes:
+      - $PWD/analytics:/app
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/analytics
+    ports:
+      - 3000:3000
+    command: ["sh", "-c", "npm install && npm run start:dev"]
+  consumer:
+    image: node:14-buster
+    working_dir: /app
+    volumes:
+      - $PWD/consumer:/app
+    ports:
+      - 5000:3000
+    command: ["sh", "-c", "npm install && npm start"]
+  provider:
+    image: node:14-buster
+    working_dir: /app
+    volumes:
+      - $PWD/provider:/app
+      - $PWD/analytics-sdk:/analytics-sdk
+    ports:
+      - 4000:3000
+    command: ["sh", "-c", "npm install && npm start"]

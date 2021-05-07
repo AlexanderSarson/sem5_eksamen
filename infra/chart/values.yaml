@@ -1,0 +1,12 @@
+ingress:
+  host: analytics.sarson.me
+  secretName: analytics-sarson-me
+
+image:
+  analytics: alexandersarson/analytics:latest
+  consumer: alexandersarson/consumer:latest
+  provider: alexandersarson/provider:latest
+
+env:
+  mongodbUri: "mongodb://mongo-srv:27017/analytics"
+  analyticsUrl: "connect"
