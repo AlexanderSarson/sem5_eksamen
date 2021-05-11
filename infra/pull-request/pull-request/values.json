@@ -1,0 +1,17 @@
+{
+  "ingress": {
+    "host": "analytics.sarson.me",
+    "secretName": "analytics-sarson-me"
+  },
+  "image": {
+    "analytics": "alexandersarson/analytics:c76817146e10ee268819b6fcd483a246520a9720",
+    "consumer": "alexandersarson/consumer:894134fafc8a07da3a8bb5e43c70f446e51c927b",
+    "provider": "alexandersarson/provider:39d7a92538c2436c3b8567da75430bba2179299b"
+  },
+  "env": {
+    "mongodbUri": "mongodb://mongo-srv:27017/analytics"
+  },
+  "namespace": "pr-analytics-pull-request",
+  "name": "pr-analytics-pull-request",
+  "branch": "pull-request"
+}
