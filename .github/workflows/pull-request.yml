@@ -76,9 +76,9 @@ jobs:
           IMAGE: "${{ secrets.DOCKERHUB_USERNAME }}/analytics:${{ github.sha }}"
           BRANCH_NAME: "${{ steps.extract_branch.outputs.branch }}"
         run: |
-          mkdir -p infra/pull-request/${{ github.ref }}
-          cp infra/pr-template/values.json infra/pull-request/${{ github.ref }}
-          cd infra/pull-request/${{ github.ref }}
+          mkdir -p infra/pull-request/$BRANCH_NAME
+          cp infra/pr-template/values.json infra/pull-request/$BRANCH_NAME
+          cd infra/pull-request/$BRANCH_NAME
           tmp=$(mktemp)
           jq --arg image "$IMAGE" '.image.analytics = $image' values.json > "$tmp" && mv "$tmp" values.json
           jq --arg branch "$BRANCH_NAME" '.branch = $branch' values.json > "$tmp" && mv "$tmp" values.json
@@ -92,4 +92,4 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+          branch: pull-request
