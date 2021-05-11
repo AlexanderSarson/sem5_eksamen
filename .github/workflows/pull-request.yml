@@ -87,6 +87,7 @@ jobs:
           cat values.json
       - name: Commit files
         run: |
+          git add .
           git commit -am "Bump docker tag: ${{ github.sha }}"
       - name: Push changes
         uses: ad-m/github-push-action@master
