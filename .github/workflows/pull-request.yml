@@ -76,7 +76,8 @@ jobs:
       - name: Update value file
         env:
           IMAGE: "${{ secrets.DOCKERHUB_USERNAME }}/analytics:${{ github.sha }}"
-          BRANCH_NAME: "${{ steps.extract_branch.outputs.branch }}"
+          #BRANCH_NAME: "${{ steps.extract_branch.outputs.branch }}"
+          BRANCH_NAME: "${{ github.head_ref }}"
         run: |
           mkdir -p infra/pull-request/$BRANCH_NAME
           cp infra/pr-template/values.json infra/pull-request/$BRANCH_NAME
