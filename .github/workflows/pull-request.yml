@@ -56,7 +56,8 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-        ref: pull-request
+        with:
+          ref: pull-request
 
       - name: Extract branch name
         shell: bash
