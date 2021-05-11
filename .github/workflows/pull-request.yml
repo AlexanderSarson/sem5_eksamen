@@ -1,0 +1,95 @@
+name: analytics-build-push-update
+
+on:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+
+      - name: npm install and test
+        working-directory: analytics
+        run: |
+          npm install
+          npm run test:ci
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        with:
+          projectBaseDir: analytics
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: analytics
+          file: ./analytics/Dockerfile
+          platforms: linux/amd64,linux/arm64 # Remember image in dockerfile should also support these platforms
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/analytics:${{ github.sha }}
+  update:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
+      - name: Setup jq
+        run: sudo apt-get install jq
+      - name: Update repo
+        #Because this is a change to value file it is important to have the newest version so we avoid conflicts
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git config --local pull.ff only
+          git pull
+      - name: Update value file
+        env:
+          IMAGE: "${{ secrets.DOCKERHUB_USERNAME }}/analytics:${{ github.sha }}"
+          BRANCH_NAME: "${{ steps.extract_branch.outputs.branch }}"
+        run: |
+          mkdir -p infra/pull-request/${{ github.ref }}
+          cp infra/pr-template/values.json infra/pull-request/${{ github.ref }}
+          cd infra/pull-request/${{ github.ref }}
+          tmp=$(mktemp)
+          jq --arg image "$IMAGE" '.image.analytics = $image' values.json > "$tmp" && mv "$tmp" values.json
+          jq --arg branch "$BRANCH_NAME" '.branch = $branch' values.json > "$tmp" && mv "$tmp" values.json
+          jq --arg name pr-analytics-"$BRANCH_NAME" '.name = $name' values.json > "$tmp" && mv "$tmp" values.json
+          jq --arg namespace pr-analytics-"$BRANCH_NAME" '.namespace = $namespace' values.json > "$tmp" && mv "$tmp" values.json
+          cat values.json
+      - name: Commit files
+        run: |
+          git commit -am "Bump docker tag: ${{ github.sha }}"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
