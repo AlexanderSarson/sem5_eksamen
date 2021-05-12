@@ -9,7 +9,8 @@
     "provider": "alexandersarson/provider:39d7a92538c2436c3b8567da75430bba2179299b"
   },
   "env": {
-    "mongodbUri": "mongodb://mongo-srv:27017/analytics"
+    "mongodbUri": "mongodb://mongo-srv:27017/analytics",
+    "analyticsUrl": "connect"
   },
   "namespace": "analytics",
   "name": "analytics"
