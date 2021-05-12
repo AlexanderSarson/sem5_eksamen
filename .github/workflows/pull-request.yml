@@ -87,6 +87,8 @@ jobs:
           jq --arg branch "$BRANCH_NAME" '.branch = $branch' values.json > "$tmp" && mv "$tmp" values.json
           jq --arg name pr-analytics-"$BRANCH_NAME" '.name = $name' values.json > "$tmp" && mv "$tmp" values.json
           jq --arg namespace pr-analytics-"$BRANCH_NAME" '.namespace = $namespace' values.json > "$tmp" && mv "$tmp" values.json
+          jq --arg host pr-analytics-"$BRANCH_NAME".sarson.me '.ingress.host = $host' values.json > "$tmp" && mv "$tmp" values.json
+          jq --arg secretname pr-analytics-"$BRANCH_NAME" '.ingress.secretname = $secretname' values.json > "$tmp" && mv "$tmp" values.json
           cat values.json
       - name: Commit files
         run: |
