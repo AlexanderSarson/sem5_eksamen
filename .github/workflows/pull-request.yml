@@ -1,4 +1,4 @@
-name: analytics-build-push-update
+name: pull-request
 
 on:
   pull_request:
@@ -59,11 +59,6 @@ jobs:
         with:
           ref: pull-request
 
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
-
       - name: Setup jq
         run: sudo apt-get install jq
       - name: Update repo
@@ -76,7 +71,6 @@ jobs:
       - name: Update value file
         env:
           IMAGE: "${{ secrets.DOCKERHUB_USERNAME }}/analytics:${{ github.sha }}"
-          #BRANCH_NAME: "${{ steps.extract_branch.outputs.branch }}"
           BRANCH_NAME: "${{ github.head_ref }}"
         run: |
           mkdir -p infra/pull-request/$BRANCH_NAME
