@@ -1,0 +1,35 @@
+name: pull-request-close
+
+on:
+  pull_request:
+    types: [closed]
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          ref: pull-request
+      - name: Update repo
+        #Because this is a change to a folder it is important to have the newest version so we avoid conflicts
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git config --local pull.ff only
+          git pull
+      - name: delete folder
+        env:
+          BRANCH_NAME: "${{ github.head_ref }}"
+        run: |
+          cd infra/pull-request
+          rm -rf $BRANCH_NAME
+      - name: Commit files
+        run: |
+          git add .
+          git commit -am "Bump docker tag: ${{ github.sha }}"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: pull-request
