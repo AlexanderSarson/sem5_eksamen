@@ -4,7 +4,7 @@
     "secretName": "pr-analytics-dev"
   },
   "image": {
-    "analytics": "alexandersarson/analytics:19ed03feebd6b07a9293539a261e85138cdb5d8d",
+    "analytics": "alexandersarson/analytics:6603e3e911b8e919530302712a713e65f02f6137",
     "consumer": "alexandersarson/consumer:894134fafc8a07da3a8bb5e43c70f446e51c927b",
     "provider": "alexandersarson/provider:39d7a92538c2436c3b8567da75430bba2179299b"
   },
