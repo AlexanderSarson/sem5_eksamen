@@ -11,10 +11,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - {{.Values.ingress.host}}
-      secretName: {{.Values.ingress.secretName}}
+        - {{ .Values.ingress.host }}
+      secretName: {{ .Values.ingress.secretName }}
   rules:
-    - host: {{.Values.ingress.host}}
+    - host: {{ .Values.ingress.host }}
       http:
         paths:
           - path: /provider
@@ -24,4 +24,8 @@ spec:
           - path: /consumer
             backend:
               serviceName: consumer
+              servicePort: 3000
+          - path: /analytics
+            backend:
+              serviceName: analytics
               servicePort: 3000
