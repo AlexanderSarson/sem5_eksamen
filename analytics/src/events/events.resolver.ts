@@ -15,8 +15,6 @@ export class EventsResolver {
 
   @Mutation(() => Event)
   async create(@Args('input') createEventDto: CreateEventDto): Promise<Event> {
-    console.log(createEventDto);
-
     return this.eventsService.create(createEventDto);
   }
 
