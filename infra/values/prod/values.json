@@ -4,7 +4,7 @@
     "secretName": "analytics-sarson-me"
   },
   "image": {
-    "analytics": "alexandersarson/analytics:fda4a0267fecac04db3a3472becec462e7845c7a",
+    "analytics": "alexandersarson/analytics:6bd5b46d92391dc31344ed2c8fa4e60a0538637d",
     "consumer": "alexandersarson/consumer:894134fafc8a07da3a8bb5e43c70f446e51c927b",
     "provider": "alexandersarson/provider:6bd5b46d92391dc31344ed2c8fa4e60a0538637d"
   },
