@@ -1,6 +1,5 @@
 import React from "react";
-import {create} from "analytics-sdk";
-let URL = "http://analytics:3000/api/events";
+let URL = "http://localhost:3000/api/events";
 
 export default function AddEvent() {
   const handleSubmit = async (evt) => {
@@ -19,12 +18,11 @@ export default function AddEvent() {
         value: "value",
       },
     };
-    await create("", event);
-    // await fetch(URL, {
-    //   method: "POST",
-    //   body: JSON.stringify(event),
-    //   headers: {"Content-Type": "application/json"},
-    // });
+    await fetch(URL, {
+      method: "POST",
+      body: JSON.stringify(event),
+      headers: { "Content-Type": "application/json" },
+    });
   };
 
   return (
