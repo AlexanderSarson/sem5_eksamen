@@ -6,26 +6,29 @@ metadata:
     kubernetes.io/ingress.class: nginx
     # nginx.ingress.kubernetes.io/use-regex: "true"
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    # nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   tls:
     - hosts:
-        - {{ .Values.ingress.host }}
-      secretName: {{ .Values.ingress.secretName }}
+        - {{.Values.ingress.host}}
+      secretName: {{.Values.ingress.secretName}}
   rules:
-    - host: {{ .Values.ingress.host }}
+    - host: {{.Values.ingress.host}}
       http:
         paths:
           - path: /provider
+            pathType: Prefix
             backend:
               serviceName: provider
               servicePort: 3000
           - path: /consumer
+            pathType: Prefix
             backend:
               serviceName: consumer
               servicePort: 3000
           - path: /analytics
+            pathType: Prefix
             backend:
               serviceName: analytics
               servicePort: 3000
