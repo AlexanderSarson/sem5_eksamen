@@ -6,7 +6,7 @@
   "image": {
     "analytics": "alexandersarson/analytics:f62c99a8f068da6c07cdedfbdb65ca9f9e5f4164",
     "consumer": "alexandersarson/consumer:7b856089281828d0d0c57f75767148c9a074d6b9",
-    "provider": "alexandersarson/provider:6bd5b46d92391dc31344ed2c8fa4e60a0538637d"
+    "provider": "alexandersarson/provider:df81594dd3a7c2c9ca261bc6bba9c8e7499b7385"
   },
   "env": {
     "mongodbUri": "mongodb://mongo-srv:27017/analytics",
