@@ -1,5 +1,5 @@
 import * as request from 'supertest';
-import {app, createEvent} from './setup';
+import { app, createEvent } from './setup';
 
 describe('Event controller', () => {
   it('returns all events', async () => {
@@ -7,7 +7,7 @@ describe('Event controller', () => {
     await createEvent();
     await createEvent();
     const response = await request(app.getHttpServer())
-      .get('/api/events/all')
+      .get('/analytics/api/events/all')
       .send()
       .expect(200);
     expect(response.body.length).toBe(3);
@@ -29,7 +29,7 @@ describe('Event controller', () => {
       },
     };
     const response = await request(app.getHttpServer())
-      .post('/api/events')
+      .post('/analytics/api/events')
       .send(event)
       .expect(201);
     expect(response.body.entityId).toBe(entityId);
@@ -40,7 +40,7 @@ describe('Event controller', () => {
     await createEvent(undefined, undefined, entityId);
 
     const response = await request(app.getHttpServer())
-      .get(`/api/events/${entityId}`)
+      .get(`/analytics/api/events/${entityId}`)
       .send()
       .expect(200);
 
