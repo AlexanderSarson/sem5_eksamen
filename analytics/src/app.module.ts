@@ -33,6 +33,10 @@ class MongooseConfigService implements MongooseOptionsFactory {
     GraphQLModule.forRoot({
       include: [EventsModule],
       autoSchemaFile: true,
+      cors: {
+        credentials: true,
+        origin: true,
+      },
     }),
   ],
   controllers: [],
