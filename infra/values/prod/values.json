@@ -5,7 +5,7 @@
   },
   "image": {
     "analytics": "alexandersarson/analytics:0796f1ba05fa6bbcdc9cb159acbad6d1a3c78a2d",
-    "consumer": "alexandersarson/consumer:b029c6909d80e17b4f0ec06584396148fce7e348",
+    "consumer": "alexandersarson/consumer:373160bc00f8b3f0ae324e2f0852592075aae291",
     "provider": "alexandersarson/provider:df81594dd3a7c2c9ca261bc6bba9c8e7499b7385"
   },
   "env": {
