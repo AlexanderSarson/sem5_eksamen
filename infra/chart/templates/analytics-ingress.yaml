@@ -12,8 +12,18 @@ spec:
   tls:
     - hosts:
         - {{.Values.ingress.host}}
+        - provider.sarson.me
+        - consumer.sarson.me
       secretName: {{.Values.ingress.secretName}}
   rules:
+    - host: {{.Values.ingress.host}}
+      http:
+        paths:
+          - path: /analytics
+            pathType: Prefix
+            backend:
+              serviceName: analytics
+              servicePort: 3000
     - host: provider.sarson.me
       http:
         paths:
@@ -27,12 +37,4 @@ spec:
           - path: /
             backend:
               serviceName: consumer
-              servicePort: 3000
-    - host: {{.Values.ingress.host}}
-      http:
-        paths:
-          - path: /analytics
-            pathType: Prefix
-            backend:
-              serviceName: analytics
               servicePort: 3000
