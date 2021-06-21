@@ -3,7 +3,7 @@ import { EventsService } from './events.service';
 import { Event } from './schemas/events.schema';
 import { CreateEventDto } from './dto/create-event.dto';
 
-@Controller('api/events')
+@Controller('analytics/api/events')
 export class EventsController {
   constructor(private eventsService: EventsService) {}
 
