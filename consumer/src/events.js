@@ -94,7 +94,7 @@ export default function Events() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      fetch("http://localhost:3000/api/events/all")
+      fetch("https://analytics.sarson.me/analytics/api/events/all")
         .then((res) => res.json())
         .then((data) => {
           setEvents(data);
