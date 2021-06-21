@@ -1,5 +1,5 @@
 import React from "react";
-let URL = "http://localhost:3000/api/events";
+let URL = "https://analytics.sarson.me/analytics/api/events";
 
 export default function AddEvent() {
   const handleSubmit = async (evt) => {
