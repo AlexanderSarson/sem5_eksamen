@@ -1,0 +1,18 @@
+{
+  "ingress": {
+    "host": "pr-analytics-feature1.sarson.me",
+    "secretName": "pr-analytics-feature1"
+  },
+  "image": {
+    "analytics": "alexandersarson/analytics:f127c8647b05c66ed7c6d0acc42ef8cec56f7412",
+    "consumer": "alexandersarson/consumer:894134fafc8a07da3a8bb5e43c70f446e51c927b",
+    "provider": "alexandersarson/provider:39d7a92538c2436c3b8567da75430bba2179299b"
+  },
+  "env": {
+    "mongodbUri": "mongodb://mongo-srv:27017/analytics",
+    "analyticsUrl": "connect"
+  },
+  "namespace": "pr-analytics-feature1",
+  "name": "pr-analytics-feature1",
+  "branch": "feature1"
+}
