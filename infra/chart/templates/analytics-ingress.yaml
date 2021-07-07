@@ -38,3 +38,7 @@ spec:
             backend:
               serviceName: consumer
               servicePort: 3000
+          - path: /analytics
+            backend:
+              serviceName: analytics
+              servicePort: 3000
